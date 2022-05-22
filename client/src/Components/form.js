@@ -39,11 +39,11 @@ export default class Form extends Component {
     onSubmit = (e) => {
 		e.preventDefault();
         if(this.state.selectedInvestmentTypes.length>2){
-            swal("Opps!","Please choose maximum 2 stategies","warning")
+            swal("Alert!","You can select maximum 2 strategies", "warning")
         }else if(this.state.selectedInvestmentTypes.length<1){
-            swal("Opps!","Please choose minimum 1 stategy","warning")
+            swal("Alert!","Please select minimum 1 stategy","warning")
         }else if(parseFloat(this.state.amount) < 5000){
-            swal("Opps!","Please enter amount more than $5000","warning")
+            swal("Alert!","Please enter amount greater than $5000","warning")
         }else{
             let Strategies = []
         this.state.selectedInvestmentTypes.forEach(type => {
@@ -79,28 +79,28 @@ export default class Form extends Component {
 		}
         return (
             <div class="container">
-        <h1>Stock Profile Suggestion Engine</h1>
+        <h1 className="title">STOCK PORTFOLIO SUGGESTION ENGINE</h1>
         <form>
             <div class="row">
                 <div class="column">
-                    <label for="amount">Investing Amount ($) - Minimum $5000</label>
+                    <label for="amount">Enter your investing amount (in $) (Minimum $5000 needs to be invested)</label>
                     <input type="number" id="amount"  defaultValue={5000} min={5000} onChange={this.onChange}/>
                 </div>
                 
             </div>
             <div class="row">
                 <div class="column">
-                    <label for="investmentTypes">Choose Investment Strategies</label>
-                    <Multiselect
+                    <label for="investmentTypes">Select your Investment Strategy</label>
+                    <Multiselect className="multi"
                                 options={this.state.investmentTypes}
                                 displayValue="label"
-                                placeholder="Select Investment Type(s)"
+                                placeholder="Click to select"
                                 onSelect={this.onSelect}
-                                style={{ chips: { background: '#009688'  }, color:""}}
+                                style={{ chips: { background: '#398AB9'  }, color:""}}
                                 />
                 </div>
             </div>
-            <button type='submit' onClick={this.onSubmit}>Submit</button>
+            <button type='submit' style={{width: "100%"}} onClick={this.onSubmit}>Submit</button>
         </form>
     </div>
         )

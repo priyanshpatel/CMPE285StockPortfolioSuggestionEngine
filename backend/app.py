@@ -2,72 +2,66 @@ import os
 import json
 from flask import Flask, request, Response
 from flask_cors import CORS, cross_origin
-import pyEX as p
-
+import pyEX as py_ex
 
 app = Flask(__name__)
 CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
-# CORS(app, resources={r"/*": {"origins": "*"}})
 
-ethicalInvesting = ["CRM", "KMB", "HPE"]
-growthInvesting = ["AMD", "SHOP", "SQ"]
-indexInvesting = ["ILTB", "VOO", "VTI"]
-qualityInvesting = ["UNH", "HD", "MA"]
-valueInvesting = ["PG", "JNJ", "GE"]
-apiClient = p.Client(api_token='pk_c9bc08eb6a32489ba43d656fafd082cd', version='stable')
+ethical_stocks = ["AAPL", "TSLA", "MSFT"]
+growth_stocks = ["GOOGL", "FB", "CRM"]
+index_stocks = ["VTI", "IVV", "SPY"]
+quality_stocks = ["TMO", "UNH", "MA"]
+value_stocks = ["PG", "JNJ", "BBY"]
+iex_api = py_ex.Client(api_token='pk_f28aeb2fb6f14568b9be93337548d7ae', version='stable')
 
 
-def apiCall(investmentType):
-    filtersToReturn = ['symbol', 'companyName', 'latestPrice', 'latestTime', 'change', 'changePercent']
-    returnData = []
+def get_data(strategy):
+    stats = [ 'latestPrice', 'latestTime', 'change', 'changePercent', 'companyName', 'open', 'close', 'symbol', 'low', 'high', 'week52High', 'week52Low']
+    output = []
 
-    # Looping through given stock and appending data to result
-    for sym in investmentType:
-        comp_data = {}
-        print("***********", sym)
-        data = apiClient.quote(symbol=sym)
-        for filter in filtersToReturn:
-            comp_data[filter] = data[filter]
-        returnData.append(comp_data)
-    return returnData
+    for ticker_name in strategy:
+        stat_data = {}
+        data = iex_api.quote(symbol=ticker_name)
+        for stat in stats:
+            stat_data[stat] = data[stat]
+        output.append(stat_data)
+    return output
 
 @app.route('/getData', methods=['POST'])
 @cross_origin(origin='*')
-def requestFunction():
-    requestStrategies = request.json['Strategies']
-    requestAmount = float(request.json['Amount'])
-    strategiesResponse = []
-    strategiesResponse2 = {}
-    strategiesResponseAmount = ["{:.2f}".format(requestAmount*0.5), "{:.2f}".format(requestAmount*0.30), "{:.2f}".format(requestAmount*0.20)]
-    print("_-----------------------------")
-    print(requestAmount)
-    print(strategiesResponseAmount)
-    for strategy in requestStrategies:
+def get_strategy():
+    select_strategy = request.json['Strategies']
+    investment_amount = float(request.json['Amount'])
+    suggestions = []
+    suggestion_data = {}
+    suggested_amount = ["{:.2f}".format(investment_amount*0.45), "{:.2f}".format(investment_amount*0.35), "{:.2f}".format(investment_amount*0.20)]
+  
+    for strategy in select_strategy:
         if strategy == "Ethical Investing":
-            strategiesResponse2['Ethical Investing'] = apiCall(ethicalInvesting)
-            strategiesResponse.append(apiCall(ethicalInvesting))
+            suggestion_data['Ethical Investing'] = get_data(ethical_stocks)
+            suggestions.append(get_data(ethical_stocks))
         elif strategy == "Growth Investing":
-            strategiesResponse2['Growth Investing'] = apiCall(growthInvesting)
-            strategiesResponse.append(apiCall(growthInvesting))
+            suggestion_data['Growth Investing'] = get_data(growth_stocks)
+            suggestions.append(get_data(growth_stocks))
         elif strategy == "Index Investing":
-            strategiesResponse2['Index Investing'] = apiCall(indexInvesting)
-            strategiesResponse.append(apiCall(indexInvesting))
+            suggestion_data['Index Investing'] = get_data(index_stocks)
+            suggestions.append(get_data(index_stocks))
         elif strategy == "Quality Investing":
-            strategiesResponse2['Quality Investing'] = apiCall(qualityInvesting)
-            strategiesResponse.append(apiCall(qualityInvesting))
+            suggestion_data['Quality Investing'] = get_data(quality_stocks)
+            suggestions.append(get_data(quality_stocks))
         elif strategy == "Value Investing":
-            strategiesResponse2['Value Investing'] = apiCall(valueInvesting)
-            strategiesResponse.append(apiCall(valueInvesting))
+            suggestion_data['Value Investing'] = get_data(value_stocks)
+            suggestions.append(get_data(value_stocks))
         else:
-            strategiesResponse2['Invalid Strategy'] = {}
-            strategiesResponse.append("Invalid Strategy")
+            suggestion_data['Invalid Strategy'] = {}
+            suggestions.append("Invalid Strategy")
 
-    responseDict = { "strategiesResponse": strategiesResponse2, "amountResponse": strategiesResponseAmount}
+    responseDict = { "strategiesResponse": suggestion_data, "amountResponse": suggested_amount}
     print(responseDict)
-    strategiesResponse=Response(json.dumps(responseDict), mimetype='application/json')
-    strategiesResponse.headers.add("Access-Control-Allow-Origin", "*")
-    return strategiesResponse
+    suggestions=Response(json.dumps(responseDict), mimetype='application/json')
+    suggestions.headers.add("Access-Control-Allow-Origin", "*")
+    return suggestions
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

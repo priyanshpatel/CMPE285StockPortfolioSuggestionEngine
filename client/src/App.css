@@ -7,12 +7,43 @@
   font-family: "Poppins", sans-serif;
   font-weight: 500;
 }
+.multi{
+  background-color: #EEEEEE;
+}
+.title{
+  font-family: 'Bakbak One';
+}
+.alignCenter{
+  text-align: center;
+}
+.blackColor{
+  color: black;
+}
+.center {
+  margin: auto;
+  border: 3px solid green;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+.detailsLeft1 {
+  text-align: right; 
+  width: 35%;
+}
+.detailsLeft2 {
+  text-align: right; 
+  width: 25%;
+}
+.detailsRight {
+  text-align: left; 
+  width: 20%;
+}
+
 body {
   height: 100vh;
-  background: linear-gradient(135deg, #e946b3, #e946b3);
+  background: linear-gradient(135deg, #1C658C, #1C658C);
 }
 .container {
-  background-color: #ffffff;
+  background-color: #D8D2CB;
   width: 50%;
   min-width: 420px;
   padding: 35px 50px;
@@ -59,7 +90,7 @@ input {
   font-weight: 400;
   padding: 8px 10px;
   border-radius: 5px;
-  border: 1.2px solid #c4cae0;
+  border: 1.2px solid #EEEEEE;
   margin-top: 5px;
 }
 textarea {
@@ -73,9 +104,10 @@ input:focus {
 button {
   border: none;
   padding: 10px 20px;
-  background: linear-gradient(130deg, #6f6df4, #4c46f5);
+  background: linear-gradient(130deg, #398AB9, #398AB9);
   color: #ffffff;
   border-radius: 3px;
+  cursor: pointer;
 }
 
 /* RADIO */
