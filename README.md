@@ -39,7 +39,7 @@ The Flask application is ran with a localhost server (IP address 127.0.0.1:5000)
 
 ### To run backend:
 - Open code in an IDE of your choice
-- Open terminal and navigate to StockPortfolioSuggestionEngine/backend
+- Open terminal and navigate to CMPE285StockPortfolioSuggestionEngine/backend
 - run command pip install -r requirements.txt
 - run command pip install --upgrade Flask
 - run command pip install --upgrade Werkzeug
@@ -47,7 +47,7 @@ The Flask application is ran with a localhost server (IP address 127.0.0.1:5000)
 - run command flask run
 
 ###	To run client
-- Open terminal and navigate to StockPortfolioSuggestionEngine /client
+- Open terminal and navigate to CMPE285StockPortfolioSuggestionEngine/client
 - run command npm install
 - run command npm start
 
