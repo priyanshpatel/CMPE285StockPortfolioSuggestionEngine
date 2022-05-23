@@ -1,5 +1,5 @@
 # CMPE 285 Project: Stock Portfolio Suggestion Engine
-- Video Link: 
+- Video Link: https://youtu.be/M8513MQTtm0
 
 ## About Project:
 Input: User will input dollar amount to invest in USD (Minimum is $5000 USD)
