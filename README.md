@@ -4,7 +4,7 @@
 ## About Project:
 Input: User will input dollar amount to invest in USD (Minimum is $5000 USD)
 
-### Pick one or two investment strategies:
+Pick one or two investment strategies:
 - Ethical Investing
 - Growth Investing
 - Index Investing
@@ -13,19 +13,19 @@ Input: User will input dollar amount to invest in USD (Minimum is $5000 USD)
 
 The engine needs to assign stocks or ETFs for a selected investment strategy. E.g.
 
-### Index Investing strategy could map to the following ETFs:
+Index Investing strategy could map to the following ETFs:
 - Vanguard Total Stock Market ETF (VTI)
 - iShares Core MSCI Total Intl Stk (IXUS)
 - iShares Core 10+ Year USD Bond (ILTB)
 
-### Ethical Investing strategy could map to these stocks:
+Ethical Investing strategy could map to these stocks:
 - Apple (APPL)
 - Adobe (ADBE)
 - Nestle (NSRGY)
 
 Each strategy map to at least 3 different stocks/ETFs.
 
-### Output:
+Output:
 
 The suggestion engine will output:
 
